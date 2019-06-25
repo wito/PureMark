@@ -23,9 +23,9 @@
 import Foundation
 
 open class Lexer {
-    
+
     public init() {}
-    
+
     let tokenGenerators: [(regex: String, templates: [String], tokenGenerator: ([String])throws -> Token?)] = [
         ("\\\\(.)", ["$1"], { return .escape($0[0].safetyHTMLEncoded())}),
         ("\\`\\`\\`((.|\n|\n\r|\r)*)\\`\\`\\`", ["$1"], {return .codeBlock($0[0].safetyHTMLEncoded())}),
@@ -47,36 +47,35 @@ open class Lexer {
         ("\\`([^\\`]*)\\`", ["$1"], { return .code($0[0].safetyHTMLEncoded())}),
         ("(\n{2}|(\n\r){2})", [], { _ in return .break }),
         ("([^\\s]+)", ["$1"], { return .text($0[0].safetyHTMLEncoded())})
-        
+
     ]
-    
+
     public func tokenize(_ string: String)throws -> [Token] {
         var tokens: [Token] = []
         var input = string
-        
-        while input.characters.count > 0 {
+
+        while input.count > 0 {
             var matched = false
-            
+
             for (regex, template, generator) in tokenGenerators {
                 if let regexMatch = try input.match(regex: regex, with: template) {
                     if let token = try generator(regexMatch.0) {
                         tokens.append(token)
                     }
-                    input = input.substring(from: input.characters.index(input.startIndex, offsetBy: regexMatch.1.characters.count))
+                    input = input.substring(from: input.index(input.startIndex, offsetBy: regexMatch.1.count))
                     matched = true
                     break
-                    
                 }
             }
             if !matched {
-                let index = input.characters.index(input.startIndex, offsetBy: 1)
+                let index = input.index(input.startIndex, offsetBy: 1)
                 tokens.append(.text(input.substring(to: index)))
                 input = input.substring(from: index)
             }
         }
         return tokens
     }
-    
+
     public enum Token {
         case header1([Token])
         case header2([Token])
@@ -97,7 +96,7 @@ open class Lexer {
         case escape(String)
         case text(String)
         case `break`
-        
+
         public var html: String {
             switch self {
             case .header1(let tokens): return "<h1>\(tokens.map({return $0.html}).joined(separator: " "))</h1>"
@@ -121,7 +120,7 @@ open class Lexer {
             case .break: return "<br>"
             }
         }
-        
+
         public var text: String {
             switch self {
             case .header1(let tokens): return tokens.map({return $0.text}).joined(separator: " ")
@@ -145,6 +144,5 @@ open class Lexer {
             case .break: return ""
             }
         }
-        
     }
 }

@@ -21,7 +21,7 @@
 //SOFTWARE.
 
 extension Character {
-    
+
     /// Tests a character to see if it could be involved in an HTML tag.
     ///
     /// - Returns: A bool denoting whether the the character is a '>', '<', '/', '(', ')', '"', '{', or '}'.
@@ -32,14 +32,14 @@ extension Character {
 }
 
 extension String {
-    
+
     /// Encodes a string to pervent direct HTML injection to a web page.
     ///
     /// - Returns: The encoded string.
-    public func safetyHTMLEncoded() -> String {
+    func safetyHTMLEncoded() -> String {
         let htmlAsciiCodes: [String: String] = ["<": "&lt;", ">": "&gt;", "/": "&#47;", "(": "&#40;", ")": "&#41;", "{": "&#123;", "}": "&#125;", "\"": "&quot;"]
         var finalString = ""
-        _ = self.characters.map {
+        _ = self.map {
             if $0.isDangerousAscii() {
                 finalString.append(htmlAsciiCodes[String($0)]!)
             } else { finalString.append(String($0)) }
