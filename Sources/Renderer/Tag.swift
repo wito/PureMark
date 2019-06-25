@@ -14,7 +14,7 @@ extension String {
       .sorted()
       .joined()
 
-    if (string.length > 0) {
+    if (string.count > 0) {
       return "<\(tag)\(attributeString)>\(string)</\(tag)>"
     } else {
       return "<\(tag)\(attributeString) />"
