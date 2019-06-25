@@ -141,7 +141,7 @@ open class Parser {
         
         stripNewline()
         
-        return HeaderOneNode(content: textNodes)
+        return HeaderNode(content: textNodes, level: 1)
     }
     
     public func parseHeaderTwo()throws -> ElementNode {
@@ -153,7 +153,7 @@ open class Parser {
         
         stripNewline()
         
-        return HeaderTwoNode(content: textNodes)
+        return HeaderNode(content: textNodes, level: 2)
     }
     
     public func parseHeaderThree()throws -> ElementNode {
@@ -165,7 +165,7 @@ open class Parser {
         
         stripNewline()
         
-        return HeaderThreeNode(content: textNodes)
+        return HeaderNode(content: textNodes, level: 3)
     }
     
     public func parseHeaderFour()throws -> ElementNode {
@@ -177,7 +177,7 @@ open class Parser {
         
         stripNewline()
         
-        return HeaderFourNode(content: textNodes)
+        return HeaderNode(content: textNodes, level: 4)
     }
     
     public func parseHeaderFive()throws -> ElementNode {
@@ -189,7 +189,7 @@ open class Parser {
         
         stripNewline()
         
-        return HeaderFiveNode(content: textNodes)
+        return HeaderNode(content: textNodes, level: 5)
     }
     
     public func parseHeaderSix()throws -> ElementNode {
@@ -201,7 +201,7 @@ open class Parser {
         
         stripNewline()
         
-        return HeaderSixNode(content: textNodes)
+        return HeaderNode(content: textNodes, level: 6)
     }
     
     public func parseBold()throws -> ElementNode {

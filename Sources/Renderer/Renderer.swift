@@ -46,12 +46,7 @@ open class Renderer {
     public func renderNode(_ node: ElementNode) -> String {
         switch node {
         case let node as TextNode: return renderText(node: node)
-        case let node as HeaderOneNode: return  renderHeaderOne(node: node)
-        case let node as HeaderTwoNode: return  renderHeaderTwo(node: node)
-        case let node as HeaderThreeNode: return  renderHeaderThree(node: node)
-        case let node as HeaderFourNode: return  renderHeaderFour(node: node)
-        case let node as HeaderFiveNode: return  renderHeaderFive(node: node)
-        case let node as HeaderSixNode: return  renderHeaderSix(node: node)
+        case let node as HeaderNode: return renderHeader(node: node)
         case let node as BoldNode: return  renderBold(node: node)
         case let node as ItalicNode: return  renderItalic(node: node)
         case let node as LinkNode: return  renderLink(node: node)
@@ -72,46 +67,11 @@ open class Renderer {
         return node.value
     }
 
-    private func renderHeaderOne(node: HeaderOneNode) -> String {
+    private func renderHeader(node: HeaderNode) -> String {
         let text =  node.content.map({ element in
             return  renderText(element as! ParagraphNode, withParagraph: false)
         }).joined()
-        return text.tagged(with: "h1")
-    }
-
-    private func renderHeaderTwo(node: HeaderTwoNode) -> String {
-        let text =  node.content.map({ element in
-            return  renderText(element as! ParagraphNode, withParagraph: false)
-        }).joined()
-        return text.tagged(with: "h2")
-    }
-
-    private func renderHeaderThree(node: HeaderThreeNode) -> String {
-        let text =  node.content.map({ element in
-            return  renderText(element as! ParagraphNode, withParagraph: false)
-        }).joined()
-        return text.tagged(with: "h3")
-    }
-
-    private func renderHeaderFour(node: HeaderFourNode) -> String {
-        let text =  node.content.map({ element in
-            return  renderText(element as! ParagraphNode, withParagraph: false)
-        }).joined()
-        return text.tagged(with: "h4")
-    }
-
-    private func renderHeaderFive(node: HeaderFiveNode) -> String {
-        let text =  node.content.map({ element in
-            return  renderText(element as! ParagraphNode, withParagraph: false)
-        }).joined()
-        return text.tagged(with: "h5")
-    }
-
-    private func renderHeaderSix(node: HeaderSixNode) -> String {
-        let text =  node.content.map({ element in
-            return  renderText(element as! ParagraphNode, withParagraph: false)
-        }).joined()
-        return text.tagged(with: "h6")
+        return text.tagged(with: "h\(node.level)")
     }
 
     private func renderBold(node: BoldNode) -> String {

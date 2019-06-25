@@ -29,46 +29,12 @@ public struct TextNode: ElementNode {
     }
 }
 
-public struct HeaderOneNode: ElementNode {
+public struct HeaderNode: ElementNode {
     public let content: [ElementNode]
     public var description: String {
-        return "HeaderOneNode(\(content))"
+        return "HeaderNode(content: \(content), level: \(level))"
     }
-}
-
-public struct HeaderTwoNode: ElementNode {
-    public let content: [ElementNode]
-    public var description: String {
-        return "HeaderTwoNode(\(content))"
-    }
-}
-
-public struct HeaderThreeNode: ElementNode {
-    public let content: [ElementNode]
-    public var description: String {
-        return "HeaderThreeNode(\(content))"
-    }
-}
-
-public struct HeaderFourNode: ElementNode {
-    public let content: [ElementNode]
-    public var description: String {
-        return "HeaderFourNode(\(content))"
-    }
-}
-
-public struct HeaderFiveNode: ElementNode {
-    public let content: [ElementNode]
-    public var description: String {
-        return "HeaderFiveNode(\(content))"
-    }
-}
-
-public struct HeaderSixNode: ElementNode {
-    public let content: [ElementNode]
-    public var description: String {
-        return "HeaderSixNode(\(content))"
-    }
+    public let level: Int
 }
 
 public struct BoldNode: ElementNode {
@@ -153,5 +119,4 @@ public struct CodeBlockNode: ElementNode {
     public var description: String {
         return "CodeBlockNode(\(code))"
     }
-    
 }
