@@ -1,7 +1,7 @@
 import XCTest
-@testable import SwiftMark
+@testable import PureMark
 
-class SwiftMarkTests: XCTestCase {
+class PureMarkTests: XCTestCase {
     func test(markdown md: String, isEqualTo html: String) {
         let renderedMd = md.markdownToHTML!
         XCTAssertEqual(html, renderedMd)
@@ -203,7 +203,7 @@ class SwiftMarkTests: XCTestCase {
         XCTAssertEqual(html, md.markdownToHTML!)
     }
 
-    static var allTests : [(String, (SwiftMarkTests) -> () throws -> Void)] {
+    static var allTests : [(String, (PureMarkTests) -> () throws -> Void)] {
         return [
                 ("TestImageRender", testImageRender),
                 ("TestSimpleLinkRender", testSimpleLinkRender),

@@ -4,17 +4,17 @@
 import PackageDescription
 
 let package = Package(
-  name: "SwiftMark",
+  name: "PureMark",
   products: [
     .library(
-      name: "SwiftMark",
-      targets: ["SwiftMark"]),
+      name: "PureMark",
+      targets: ["PureMark"]),
   ],
   dependencies: [
   ],
   targets: [
     .target(
-      name: "SwiftMark",
+      name: "PureMark",
       dependencies: ["Lexer", "Parser", "Renderer"]
     ),
     .target(
@@ -30,7 +30,7 @@ let package = Package(
       dependencies: ["Lexer"]
     ),
     .testTarget(
-      name: "SwiftMarkTests",
-      dependencies: ["SwiftMark"]),
+      name: "PureMarkTests",
+      dependencies: ["PureMark"]),
   ]
 )
