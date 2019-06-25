@@ -198,4 +198,22 @@ class PureMarkTests: XCTestCase {
 
         XCTAssertEqual(html, md.markdownToHTML!)
     }
+
+    func testEscapeHTMLTag() {
+        let md = """
+        <raw />
+        """
+        let html = "<p>&lt;raw /&gt;</p>"
+
+        XCTAssertEqual(html, md.markdownToHTML!)
+    }
+
+    func testEscapeLinkQuote() {
+        let md = """
+        [A link](an "url")
+        """
+        let html = "<p><a href=\"an &quot;url&quot;\">A link</a></p>"
+
+        XCTAssertEqual(html, md.markdownToHTML!)
+    }
 }

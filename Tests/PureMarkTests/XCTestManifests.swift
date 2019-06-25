@@ -8,6 +8,8 @@ extension PureMarkTests {
     static let __allTests__PureMarkTests = [
         ("testCodeBlock", testCodeBlock),
         ("testEscape", testEscape),
+        ("testEscapeHTMLTag", testEscapeHTMLTag),
+        ("testEscapeLinkQuote", testEscapeLinkQuote),
         ("testHeaders", testHeaders),
         ("testHorizontalRule", testHorizontalRule),
         ("testImageRender", testImageRender),
