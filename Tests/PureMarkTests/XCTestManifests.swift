@@ -6,6 +6,7 @@ extension PureMarkTests {
     //   `swift test --generate-linuxmain`
     // to regenerate.
     static let __allTests__PureMarkTests = [
+        ("testBrokenBlockquot", testBrokenBlockquot),
         ("testCodeBlock", testCodeBlock),
         ("testCollapsingBreaks", testCollapsingBreaks),
         ("testEscape", testEscape),
@@ -14,6 +15,7 @@ extension PureMarkTests {
         ("testHeaders", testHeaders),
         ("testHorizontalRule", testHorizontalRule),
         ("testImageRender", testImageRender),
+        ("testLineBreak", testLineBreak),
         ("testList", testList),
         ("testParagraph", testParagraph),
         ("testSimpleBlockquote", testSimpleBlockquote),

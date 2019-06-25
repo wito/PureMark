@@ -152,6 +152,16 @@ class PureMarkTests: XCTestCase {
         XCTAssertEqual(html, md.markdownToHTML!)
     }
 
+    func testBrokenBlockquot() {
+        let md = """
+        > This is a blockquote  
+        > with a broken line in it.
+        """
+        let html = "<blockquote><p>This is a blockquote<br />with a broken line in it.</p></blockquote>"
+
+        XCTAssertEqual(html, md.markdownToHTML!)
+    }
+
     func testList() {
         let md = """
         Opening paragraph here
