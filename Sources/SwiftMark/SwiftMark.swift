@@ -24,24 +24,32 @@ import Lexer
 import Parser
 import Renderer
 
-public typealias Markdown = MarkdownRenderer
+typealias Markdown = MarkdownRenderer
 
 /// Renders Markdown to HTML
-open class MarkdownRenderer {
-    
+class MarkdownRenderer {
+
     /// Renders Markdown to HTML.
     ///
     /// - Parameter string: The Markdown that will be rendered
     /// - Returns: HTML created from the string passed in.
     /// - Throws: Any errors thrown when creating the RegEx to find the Markdown patterns in the string passed in, or errors while parsing.
-    public func render(_ string: String)throws -> String {
+    func render(_ string: String) throws -> String {
         let lexer = Lexer()
         let tokens = try lexer.tokenize(string)
-        
+
         let parser = Parser(tokens: tokens)
         let ast = try parser.parseTokens()
-        
+
         let renderer = Renderer(ast: ast)
         return try renderer.renderAST()
+    }
+}
+
+public extension String {
+
+    /// The Markdown in the string rendered as HTML.
+    var markdownToHTML: String? {
+        return try? Markdown().render(self)
     }
 }
