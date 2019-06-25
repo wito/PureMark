@@ -20,29 +20,28 @@
 //OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //SOFTWARE.
 
-extension Character {
+import Foundation
 
-    /// Tests a character to see if it could be involved in an HTML tag.
-    ///
-    /// - Returns: A bool denoting whether the the character is a '>', '<', '/', '(', ')', '"', '{', or '}'.
-    func isDangerousAscii() -> Bool {
-        if self == "<" || self == ">" || self == "/" || self == "(" || self == ")" || self == "{" || self == "}" || self == "\"" { return true }
-        return false
+extension CharacterSet {
+
+    /// Returns a character set containing the characters that are dangerous in XML and HTML: <, > and &
+    static var dangerousASCII: CharacterSet {
+        return CharacterSet(charactersIn: "<>&")
     }
 }
 
 extension String {
 
-    /// Encodes a string to pervent direct HTML injection to a web page.
-    ///
-    /// - Returns: The encoded string.
-    func safetyHTMLEncoded() -> String {
-        let htmlAsciiCodes: [String: String] = ["<": "&lt;", ">": "&gt;", "/": "&#47;", "(": "&#40;", ")": "&#41;", "{": "&#123;", "}": "&#125;", "\"": "&quot;"]
+    /// A representation of the string encoded to prevent HTML/XML injection.
+    var safetyHTMLEncoded: String {
+        let htmlAsciiCodes: [String: String] = ["<": "&lt;", ">": "&gt;", "&": "&amp;"]
         var finalString = ""
         _ = self.map {
-            if $0.isDangerousAscii() {
+            if CharacterSet.dangerousASCII.contains($0.unicodeScalars.first!) {
                 finalString.append(htmlAsciiCodes[String($0)]!)
-            } else { finalString.append(String($0)) }
+            } else {
+                finalString.append(String($0))
+            }
         }
         return finalString
     }
