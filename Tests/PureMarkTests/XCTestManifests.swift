@@ -7,6 +7,7 @@ extension PureMarkTests {
     // to regenerate.
     static let __allTests__PureMarkTests = [
         ("testCodeBlock", testCodeBlock),
+        ("testCollapsingBreaks", testCollapsingBreaks),
         ("testEscape", testEscape),
         ("testEscapeHTMLTag", testEscapeHTMLTag),
         ("testEscapeLinkQuote", testEscapeLinkQuote),

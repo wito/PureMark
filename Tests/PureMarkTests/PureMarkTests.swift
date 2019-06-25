@@ -32,7 +32,7 @@ class PureMarkTests: XCTestCase {
         If your iOS version is lower then the Xcode version on the other hand, you can change the deployment target for a lower version of iOS by going to the General Settings and under Deployment set your Deployment Target:
         """
 
-        html = "<p>Xcode 7.0.1 and iOS 9.1 are incompatible. You will need to update your version of Xcode via the Mac app store.</p><br /><p>If your iOS version is lower then the Xcode version on the other hand, you can change the deployment target for a lower version of iOS by going to the General Settings and under Deployment set your Deployment Target:</p>"
+        html = "<p>Xcode 7.0.1 and iOS 9.1 are incompatible. You will need to update your version of Xcode via the Mac app store.</p><p>If your iOS version is lower then the Xcode version on the other hand, you can change the deployment target for a lower version of iOS by going to the General Settings and under Deployment set your Deployment Target:</p>"
         XCTAssertEqual(html, md.markdownToHTML!)
 
         md = """
@@ -41,7 +41,7 @@ class PureMarkTests: XCTestCase {
         If your iOS version is lower then the Xcode version on the other hand, you can change the deployment target for a lower version of iOS by going to the **General Settings** and under Deployment set your *Deployment Target*:
         """
 
-        html = "<p>Xcode <code>7.0.1</code> and iOS <code>9.1</code> are <em>incompatible</em>. You will need to <strong>update your version of Xcode</strong> via the Mac app store.</p><br /><p>If your iOS version is lower then the Xcode version on the other hand, you can change the deployment target for a lower version of iOS by going to the <strong>General Settings</strong> and under Deployment set your <em>Deployment Target</em>:</p>"
+        html = "<p>Xcode <code>7.0.1</code> and iOS <code>9.1</code> are <em>incompatible</em>. You will need to <strong>update your version of Xcode</strong> via the Mac app store.</p><p>If your iOS version is lower then the Xcode version on the other hand, you can change the deployment target for a lower version of iOS by going to the <strong>General Settings</strong> and under Deployment set your <em>Deployment Target</em>:</p>"
         XCTAssertEqual(html, md.markdownToHTML!)
 
         md = """
@@ -117,7 +117,7 @@ class PureMarkTests: XCTestCase {
         # Header 1
         """
 
-        let html = "<h1>Header 1</h1><p>Plain text goes here</p><h4>header 4</h4><br /><h2>HEader2</h2><br /><p>More plain text here</p><p>Another line under it</p><br /><h1>Header with a <strong>bold <em>italic</em></strong></h1><br /><h3>Header 3</h3><h5>Header 5</h5><h6>Header 6</h6><br /><h1>Header 1</h1>"
+        let html = "<h1>Header 1</h1><p>Plain text goes here</p><h4>header 4</h4><h2>HEader2</h2><p>More plain text here</p><p>Another line under it</p><h1>Header with a <strong>bold <em>italic</em></strong></h1><h3>Header 3</h3><h5>Header 5</h5><h6>Header 6</h6><h1>Header 1</h1>"
 
         XCTAssertEqual(html, md.markdownToHTML!)
     }
@@ -171,7 +171,7 @@ class PureMarkTests: XCTestCase {
         + Does this work?
         """
 
-        let html = "<p>Opening paragraph here</p><br /><ul><li>First item</li><li>Second <em>item here</em>. Next:</li><li>Another <code>one</code></li><li><strong>Bold</strong> items make a run for it.</li></ul><br /><p>Ordered list blow:</p><br /><ol><li>Item number <em>one</em>.</li><li>Item <strong>number two</strong></li><li><code>Last</code> item in the list.</li></ol><br /><ul><li>Try another!</li><li>Does this work?</li></ul>"
+        let html = "<p>Opening paragraph here</p><ul><li>First item</li><li>Second <em>item here</em>. Next:</li><li>Another <code>one</code></li><li><strong>Bold</strong> items make a run for it.</li></ul><p>Ordered list blow:</p><ol><li>Item number <em>one</em>.</li><li>Item <strong>number two</strong></li><li><code>Last</code> item in the list.</li></ol><ul><li>Try another!</li><li>Does this work?</li></ul>"
 
         XCTAssertEqual(html, md.markdownToHTML!)
     }
@@ -185,7 +185,7 @@ class PureMarkTests: XCTestCase {
         More text
         """
 
-        let html = "<p>Paragraph here to start</p><br /><hr /><br /><p>More text</p>"
+        let html = "<p>Paragraph here to start</p><hr /><p>More text</p>"
         XCTAssertEqual(html, md.markdownToHTML!)
     }
 
@@ -213,6 +213,22 @@ class PureMarkTests: XCTestCase {
         [A link](an "url")
         """
         let html = "<p><a href=\"an &quot;url&quot;\">A link</a></p>"
+
+        XCTAssertEqual(html, md.markdownToHTML!)
+    }
+
+    func testCollapsingBreaks() {
+        let md = """
+        Words.
+
+
+        More words.
+
+
+
+        More words still.
+        """
+        let html = "<p>Words.</p><p>More words.</p><p>More words still.</p>"
 
         XCTAssertEqual(html, md.markdownToHTML!)
     }

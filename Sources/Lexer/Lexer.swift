@@ -45,9 +45,8 @@ open class Lexer {
         ("(\\+|\\-|\\*)\\s?(.+)", ["$2"], { return .unOrderedList(try Lexer().tokenize($0[0].safetyHTMLEncoded))}),
         ("\\d+\\.\\s([^\\n]+)", ["$1"], { return .orderedList(try Lexer().tokenize($0[0].safetyHTMLEncoded))}),
         ("\\`([^\\`]*)\\`", ["$1"], { return .code($0[0].safetyHTMLEncoded)}),
-        ("(\n{2}|(\n\r){2})", [], { _ in return .break }),
-        ("([^\\s]+)", ["$1"], { return .text($0[0].safetyHTMLEncoded)})
-
+        ("(\n{2,}|(\n\r){2,})", [], { _ in return .break }),
+        ("([^\\s]+)", ["$1"], { return .text($0[0].safetyHTMLEncoded)}),
     ]
 
     public func tokenize(_ string: String)throws -> [Token] {
@@ -96,53 +95,5 @@ open class Lexer {
         case escape(String)
         case text(String)
         case `break`
-
-        public var html: String {
-            switch self {
-            case .header1(let tokens): return "<h1>\(tokens.map({return $0.html}).joined(separator: " "))</h1>"
-            case .header2(let tokens): return "<h2>\(tokens.map({return $0.html}).joined(separator: " "))</h2>"
-            case .header3(let tokens): return "<h3>\(tokens.map({return $0.html}).joined(separator: " "))</h3>"
-            case .header4(let tokens): return "<h4>\(tokens.map({return $0.html}).joined(separator: " "))</h4>"
-            case .header5(let tokens): return "<h5>\(tokens.map({return $0.html}).joined(separator: " "))</h5>"
-            case .header6(let tokens): return "<h6>\(tokens.map({return $0.html}).joined(separator: " "))</h6>"
-            case .bold(let tokens): return "<strong>\(tokens.map({return $0.html}).joined(separator: " "))</strong>"
-            case .italic(let tokens): return "<em>\(tokens.map({return $0.html}).joined(separator: " "))</em>"
-            case .link(text: let tokens, url: let url): return "<a href=\"\(url)\">\(tokens.map({return $0.html}).joined(separator: " "))</a>"
-            case .image(text: let string, url: let url): return "<img src=\"\(url)\" alt=\"\(string)\">"
-            case .blockQuote(let tokens): return "<p>\(tokens.map({return $0.html}).joined(separator: " "))</p>"
-            case .orderedList(let tokens): return "<li>\(tokens.map({return $0.html}).joined(separator: " "))</li>"
-            case .unOrderedList(let tokens): return "<li>\(tokens.map({return $0.html}).joined(separator: " "))</li>"
-            case .codeBlock(let string): return string
-            case .horizontalRule: return "<hr />"
-            case .code(let string): return "<code>\(string)</code>"
-            case .escape(let string): return string
-            case .text(let string): return string
-            case .break: return "<br>"
-            }
-        }
-
-        public var text: String {
-            switch self {
-            case .header1(let tokens): return tokens.map({return $0.text}).joined(separator: " ")
-            case .header2(let tokens): return tokens.map({return $0.text}).joined(separator: " ")
-            case .header3(let tokens): return tokens.map({return $0.text}).joined(separator: " ")
-            case .header4(let tokens): return tokens.map({return $0.text}).joined(separator: " ")
-            case .header5(let tokens): return tokens.map({return $0.text}).joined(separator: " ")
-            case .header6(let tokens): return tokens.map({return $0.text}).joined(separator: " ")
-            case .bold(let tokens): return "<strong>\(tokens.map({return $0.text}).joined(separator: " "))</strong>"
-            case .italic(let tokens): return "<em>\(tokens.map({return $0.text}).joined(separator: " "))</em>"
-            case .link(text: let tokens, url: let url): return "<a href=\"\(url)\">\(tokens.map({return $0.text}).joined(separator: " "))</a>"
-            case .image(_, _): return ""
-            case .blockQuote(let tokens): return tokens.map({return $0.text}).joined(separator: " ")
-            case .orderedList(let tokens): return tokens.map({return $0.text}).joined(separator: " ")
-            case .unOrderedList(let tokens): return tokens.map({return $0.text}).joined(separator: " ")
-            case .codeBlock(let string): return string
-            case .horizontalRule: return ""
-            case .code(let string): return "<code>\(string)</code>"
-            case .escape(let string): return string
-            case .text(let string): return string
-            case .break: return ""
-            }
-        }
     }
 }

@@ -104,7 +104,7 @@ open class Renderer {
     }
 
     private func renderBreak(node: BreakNode) -> String {
-        return String.tag(with: "br")
+        return ""
     }
 
     private func renderCode(node: CodeNode) -> String {
