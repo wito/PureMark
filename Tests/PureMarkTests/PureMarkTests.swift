@@ -2,10 +2,6 @@ import XCTest
 @testable import PureMark
 
 class PureMarkTests: XCTestCase {
-    func test(markdown md: String, isEqualTo html: String) {
-        let renderedMd = md.markdownToHTML!
-        XCTAssertEqual(html, renderedMd)
-    }
 
     func testImageRender() {
         let md = "![Deployment Target Dropdown in Xcode](http://i.stack.imgur.com/HSiIL.png)"
@@ -201,21 +197,5 @@ class PureMarkTests: XCTestCase {
         let html = "<p>!<a href=\"https://stackoverflow.com/\">Stack Overflow</a></p><p>#</p><h1>H1</h1>"
 
         XCTAssertEqual(html, md.markdownToHTML!)
-    }
-
-    static var allTests : [(String, (PureMarkTests) -> () throws -> Void)] {
-        return [
-                ("TestImageRender", testImageRender),
-                ("TestSimpleLinkRender", testSimpleLinkRender),
-                ("TestStyledLinkRender", testStyledLinkRender),
-                ("TestParagraph", testParagraph),
-                ("TestCodeBlock", testCodeBlock),
-                ("TestHeaders", testHeaders),
-                ("TestSimpleBlockquotes", testSimpleBlockquote),
-                ("TestStyledBlockquotes", testStyledBlockquote),
-                ("TestLists", testList),
-                ("TestHorizontalRule", testHorizontalRule),
-                ("TestEscape", testEscape)
-        ]
     }
 }
