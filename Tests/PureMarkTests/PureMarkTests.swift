@@ -232,4 +232,14 @@ class PureMarkTests: XCTestCase {
 
         XCTAssertEqual(html, md.markdownToHTML!)
     }
+
+    func testLineBreak() {
+        let md = """
+        A line  
+        broken.
+        """
+        let html = "<p>A line<br />broken.</p>"
+
+        XCTAssertEqual(html, md.markdownToHTML!)
+    }
 }

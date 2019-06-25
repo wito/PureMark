@@ -76,7 +76,7 @@ open class Parser {
         case .link(text: _, url: _): return try parseText()
         case .image(text: _, url: _): return try parseImage()
         case .horizontalRule: return try parseHorizontalRule()
-        case .break: return try parseBreak()
+        case .break: return try parseText()
         case .code(_): return try parseText()
         case .blockQuote(_): return try parseBlockquote()
         case .orderedList(_): return try parseOrderedList()
@@ -124,6 +124,9 @@ open class Parser {
                     nodes.append(node)
                 case .bold:
                     let node = try parseBold()
+                    nodes.append(node)
+                case .break:
+                    let node = try parseBreak()
                     nodes.append(node)
                 default: break getNodes
                 }

@@ -35,9 +35,12 @@ open class Renderer {
     }
 
     private func renderText(_ node: ParagraphNode, withParagraph: Bool) -> String {
-        let text =  node.content.map(renderNode).joined()
+        let text = node.content.map(renderNode).joined()
+        guard text != "" else {
+          return ""
+        }
         if withParagraph {
-          return text.tagged(with: "p")
+            return text.tagged(with: "p")
         } else {
             return "\(text)"
         }
@@ -104,7 +107,7 @@ open class Renderer {
     }
 
     private func renderBreak(node: BreakNode) -> String {
-        return ""
+        return String.tag(with: "br")
     }
 
     private func renderCode(node: CodeNode) -> String {
@@ -112,7 +115,7 @@ open class Renderer {
     }
 
     private func renderParagraph(node: ParagraphNode) -> String {
-        return node.content.map(renderNode).joined().tagged(with: "p")
+        return renderText(node, withParagraph: true)
     }
 
     private func renderCodeBlock(node: CodeBlockNode) -> String {
