@@ -23,26 +23,26 @@
 import Parser
 
 open class Renderer {
-    
+
     private let ast: AST
-    
+
     public init(ast: AST) {
         self.ast = ast
     }
-    
+
     public func renderAST()throws -> String {
         return  ast.map(renderNode).joined()
     }
-    
+
     private func renderText(_ node: ParagraphNode, withParagraph: Bool) -> String {
         let text =  node.content.map(renderNode).joined()
         if withParagraph {
-            return "<p>\(text)</p>"
+          return text.tagged(with: "p")
         } else {
             return "\(text)"
         }
     }
-    
+
     public func renderNode(_ node: ElementNode) -> String {
         switch node {
         case let node as TextNode: return renderText(node: node)
@@ -67,116 +67,116 @@ open class Renderer {
         default: fatalError("Unsupported Node")
         }
     }
-    
+
     private func renderText(node: TextNode) -> String {
         return node.value
     }
-    
+
     private func renderHeaderOne(node: HeaderOneNode) -> String {
         let text =  node.content.map({ element in
             return  renderText(element as! ParagraphNode, withParagraph: false)
         }).joined()
-        return "<h1>\(text)</h1>"
+        return text.tagged(with: "h1")
     }
-    
+
     private func renderHeaderTwo(node: HeaderTwoNode) -> String {
         let text =  node.content.map({ element in
             return  renderText(element as! ParagraphNode, withParagraph: false)
         }).joined()
-        return "<h2>\(text)</h2>"
+        return text.tagged(with: "h2")
     }
-    
+
     private func renderHeaderThree(node: HeaderThreeNode) -> String {
         let text =  node.content.map({ element in
             return  renderText(element as! ParagraphNode, withParagraph: false)
         }).joined()
-        return "<h3>\(text)</h3>"
+        return text.tagged(with: "h3")
     }
-    
+
     private func renderHeaderFour(node: HeaderFourNode) -> String {
         let text =  node.content.map({ element in
             return  renderText(element as! ParagraphNode, withParagraph: false)
         }).joined()
-        return "<h4>\(text)</h4>"
+        return text.tagged(with: "h4")
     }
-    
+
     private func renderHeaderFive(node: HeaderFiveNode) -> String {
         let text =  node.content.map({ element in
             return  renderText(element as! ParagraphNode, withParagraph: false)
         }).joined()
-        return "<h5>\(text)</h5>"
+        return text.tagged(with: "h5")
     }
-    
+
     private func renderHeaderSix(node: HeaderSixNode) -> String {
         let text =  node.content.map({ element in
             return  renderText(element as! ParagraphNode, withParagraph: false)
         }).joined()
-        return "<h6>\(text)</h6>"
+        return text.tagged(with: "h6")
     }
-    
+
     private func renderBold(node: BoldNode) -> String {
         let text =  node.content.map({ element in
             return  renderText(element as! ParagraphNode, withParagraph: false)
         }).joined()
-        return "<strong>\(text)</strong>"
+        return text.tagged(with: "strong")
     }
-    
+
     private func renderItalic(node: ItalicNode) -> String {
         let text =  node.content.map({ element in
             return  renderText(element as! ParagraphNode, withParagraph: false)
         }).joined()
-        return "<em>\(text)</em>"
+        return text.tagged(with: "em")
     }
-    
+
     private func renderLink(node: LinkNode) -> String {
         let text =  node.text.map({ element in
             return  renderText(element as! ParagraphNode, withParagraph: false)
         }).joined()
-        return "<a href=\"\(node.url)\">\(text)</a>"
+        return text.tagged(with: "a", attributes: ["href": node.url])
     }
-    
+
     private func renderImage(node: ImageNode) -> String {
-        return "<img src=\"\(node.url)\" alt=\"\(node.text)\"/>"
+        return String.tag(with: "img", attributes: ["src": node.url, "alt": node.text])
     }
-    
+
     private func renderHorizontalRule(node: HorizontalRuleNode) -> String {
-        return "<hr/>"
+        return String.tag(with: "hr")
     }
-    
+
     private func renderBreak(node: BreakNode) -> String {
-        return "<br/>"
+        return String.tag(with: "br")
     }
-    
+
     private func renderCode(node: CodeNode) -> String {
-        return "<code>\(node.value)</code>"
+        return node.value.tagged(with: "code")
     }
-    
+
     private func renderParagraph(node: ParagraphNode) -> String {
-        return "<p>\( node.content.map(renderNode).joined())</p>"
+        return node.content.map(renderNode).joined().tagged(with: "p")
     }
-    
+
     private func renderCodeBlock(node: CodeBlockNode) -> String {
-        return "<pre><code>\(node.code.joined(separator: "\n"))</code></pre>"
+        return node.code.joined(separator: "\n").tagged(with: "code").tagged(with: "pre")
     }
-    
+
     private func renderOrderedList(node: OrderedListNode) -> String {
         let elements =  node.content.map({ element in
-            return "<li>\( renderText(element as! ParagraphNode, withParagraph: false))</li>"
+            return renderText(element as! ParagraphNode, withParagraph: false).tagged(with: "li")
         }).joined()
-        return "<ol>\(elements)</ol>"
+        return elements.tagged(with: "ol")
     }
-    
+
     private func renderUnorderedList(node: UnorderedListNode) -> String {
         let elements =  node.content.map({ element in
-            return "<li>\( renderText(element as! ParagraphNode, withParagraph: false))</li>"
+            return renderText(element as! ParagraphNode, withParagraph: false).tagged(with: "li")
         }).joined()
-        return "<ul>\(elements)</ul>"
+        return elements.tagged(with: "ul")
     }
-    
+
     private func renderBlockquote(node: BlockquoteNode) -> String {
         let elements =  node.content.map({
-            return  renderText($0 as! ParagraphNode, withParagraph: true)
+            return renderText($0 as! ParagraphNode, withParagraph: true)
         }).joined()
-        return "<blockquote>\(elements)</blockquote>"
+        return elements.tagged(with: "blockquote")
     }
 }
