@@ -18,12 +18,12 @@ func runScript(withName name: String) -> String? {
     let errPipe = Pipe();
     
     let task = Process()
-    task.launchPath = "/usr/bin/python"
+    task.executableURL = URL(string: "/usr/bin/python")
     task.arguments = arguments
     task.standardInput = Pipe()
     task.standardOutput = outPipe
     task.standardError = errPipe
-    task.launch()
+    try? task.run()
     
     let data = outPipe.fileHandleForReading.readDataToEndOfFile()
     task.waitUntilExit()

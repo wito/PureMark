@@ -84,7 +84,7 @@ class SwiftMarkTests: XCTestCase {
                 self.name = name
             }
         }
-        """.safetyHTMLEncoded() + "\n</code></pre>"
+        """ + "\n</code></pre>"
         test(markdown: md, isEqualTo: html)
         
         md = """
@@ -99,7 +99,7 @@ class SwiftMarkTests: XCTestCase {
         """
         Hello *World*!
         Great day **isn't* it?
-        """.safetyHTMLEncoded() + "\n</code></pre>"
+        """ + "\n</code></pre>"
         test(markdown: md, isEqualTo: html)
     }
     
